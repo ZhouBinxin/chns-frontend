@@ -10,12 +10,12 @@ import familyView from '../views/familyView.vue'
 Vue.use(VueRouter)
 /* eslint-disable */
 const routes = [
-  {path: '/chns/', name: 'filterPage', component: filterPage},
-  {path: '/chns/medicalHealth', name: 'medicalHealth', component: medicalHealth},
-  {path: '/chns/property', name: 'property', component: property},
-  {path: '/chns/personalView', name: 'personalView', component: personalView},
-  {path: '/chns/familyView', name: 'familyView', component: familyView},
-  {path: '/chns/filterRes', name: 'filterRes', component: filterRes}
+  {path: '/', name: 'filterPage', component: filterPage},
+  {path: '/medicalHealth', name: 'medicalHealth', component: medicalHealth},
+  {path: '/property', name: 'property', component: property},
+  {path: '/personalView', name: 'personalView', component: personalView},
+  {path: '/familyView', name: 'familyView', component: familyView},
+  {path: '/filterRes', name: 'filterRes', component: filterRes}
 ]
 
 const router = new VueRouter({

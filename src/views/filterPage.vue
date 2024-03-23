@@ -422,7 +422,7 @@ export default {
 
 .selectType {
   background-color: white;
-  margin: 30px 30px 0;
+  /* margin: 30px 30px 0; */
   border-radius: 4px;
   padding: 2% 3% 100px;
   min-height: 700px;
@@ -457,7 +457,7 @@ export default {
   margin-top: 30px;
   text-align: center;
   position: absolute;
-  bottom: 30px;
+  bottom: 200px;
   background-color: #fff;
   left: 50%;
   transform: translateX(-50%);
