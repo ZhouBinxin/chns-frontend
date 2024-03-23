@@ -505,7 +505,7 @@ export default {
       console.log(this.userInfo)
     },
     goBack () {
-      this.$router.push({name: 'HelloWorld'})
+      this.$router.push({name: 'filterPage'})
     },
     toFamilyMore (item, index) {
       this.$router.push({name: 'familyView'})
@@ -536,7 +536,7 @@ export default {
 .filterRes {
   height: 820px;
   background-color: white;
-  margin: 20px 30px 0;
+  /* margin: 20px 30px 0; */
   border-radius: 4px;
   padding: 20px;
 }

@@ -281,9 +281,9 @@ export default {
 
 .medical-health {
   background-color: white;
-  margin-top: 30px;
-  margin-left: 30px;
-  margin-right: 30px;
+  /* margin-top: 30px; */
+  /* margin-left: 30px; */
+  /* margin-right: 30px; */
   border-radius: 4px;
   padding: 3%;
 }

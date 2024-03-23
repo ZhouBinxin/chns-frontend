@@ -6,11 +6,12 @@
           <el-avatar shape="square" :size="50" :src="logoUrl"></el-avatar>
         </el-col>
         <el-col :span="4">
-          <div>家庭画像</div>
+          <router-link to="/" style="text-decoration: none">
+            <div style="color: black;">家庭画像</div>
+          </router-link>
         </el-col>
         <el-col :span="8" :offset="10">
-          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :router="true"
-                   @select="handleSelect">
+          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :router="true" @select="handleSelect">
             <el-menu-item index="1" @click="changeMenu('analysis')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;画像&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</el-menu-item>
             <el-submenu index="2">
               <template slot="title" @click="changeMenu('health')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总览概况&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</template>
@@ -29,7 +30,7 @@ import logo from '../assets/logo.png'
 /* eslint-disable */
 export default {
   name: 'mHeader',
-  data () {
+  data() {
     return {
       logoUrl: logo,
       activeIndex: '/index',
@@ -37,19 +38,19 @@ export default {
     }
   },
   methods: {
-    handleSelect (key) {
+    handleSelect(key) {
       this.activeIndex = key
     },
-    activeMenuWhenCreated () {
+    activeMenuWhenCreated() {
       this.activeIndex = '/' + this.$route.path.split('/')[1]
     },
-    changeMenu(str){
-      if (str === 'health') this.$router.push({name: 'medicalHealth'})
-      if (str === 'property') this.$router.push({name: 'property'})
-      if (str === 'analysis') this.$router.push({name: 'filterPage'})
+    changeMenu(str) {
+      if (str === 'health') this.$router.push({ name: 'medicalHealth' })
+      if (str === 'property') this.$router.push({ name: 'property' })
+      if (str === 'analysis') this.$router.push({ name: 'filterPage' })
     }
   },
-  created () {
+  created() {
     this.activeMenuWhenCreated()
   }
 }
