@@ -10,14 +10,15 @@
                 <div class="selectTitle">
                   <i class="el-icon-office-building"></i>&nbsp;选择年份
                 </div>
-                <el-select
-                  v-model="year"
-                  clearable placeholder="请选择年份">
-                  <el-option
-                    v-for="item in yearLists"
-                    :key="item"
-                    :label="item"
-                    :value="item">
+                <el-select v-model="year" clearable placeholder="请选择年份">
+                  <el-option v-for="item in yearLists" :key="item" :label="item" :value="item">
+                  </el-option>
+                </el-select>
+                <div class="selectTitle">
+                  <i class="el-icon-data-line"></i>&nbsp;选择图表
+                </div>
+                <el-select v-model="charttype" clearable placeholder="请选择图表类型">
+                  <el-option v-for="option in chartLists" :key="option" :label="option" :value="option">
                   </el-option>
                 </el-select>
                 <el-button type="primary" @click="showChart">查询医疗情况</el-button>
@@ -32,13 +33,12 @@
       <div class="text-content" v-for="(item, index) in overviewDataArr" :key="index" v-if="isShowChart">
         <div class="text-title">{{ item.title }}</div>
         <!--   todo: text文本，本应该由后端直接返回,但目前后端仅返回的是红色高亮文字，且顺序有误，因此先用固定文本展示    -->
-        <el-alert
-          :title="item.text"
-          type="info"
-          :closable="false">
+        <el-alert :title="item.text" type="info" :closable="false">
         </el-alert>
         <!-- 引用图表内容 -->
+        <!-- 根据charttype绘制图表 -->
         <bar-chart class="grid-item" :ref="item.type" :chartId="item.type"></bar-chart>
+        <!-- <pie-chart class="grid-item" :ref="item.type" :chartId="item.type"></pie-chart> -->
       </div>
     </div>
   </div>
@@ -47,15 +47,19 @@
 <script>
 // import {getAllDiseaseRate, getAllBodyExamRate, getAllInsuranceRate, getAllHelperRate} from '../axios/api'
 import barChart from '../components/charts/barChart'
+import pieChart from '../components/charts/pieChart'
 /* eslint-disable */
 export default {
   components: {
-    barChart
+    barChart,
+    pieChart
   },
   data () {
     return {
       isShowChart: false,
       yearLists: ['1989', '1991', '1993', '1997', '2000', '2004', '2006', '2009', '2011', '2015'],
+      // 图表类型
+      chartLists: ['条形图', '饼图'],
       // diseaseName: '',
       // text: '',
       // id: this.$store.state.id,
@@ -63,6 +67,7 @@ export default {
       timer: '',
       isLoading: false,
       year: '2015',
+      charttype: '条形图',
       overviewDataArr: [{
         title: '患病情况',
         type: 'disease',
@@ -151,7 +156,7 @@ export default {
         'status': 200
       },
       helperResponseData: {
-        'data': {'咨询当地的健康工作者': 2.42, '自我护理': 5.91, '看医生': 7.8, '完全没关注': 1.23},
+        'data': { '咨询当地的健康工作者': 2.42, '自我护理': 5.91, '看医生': 7.8, '完全没关注': 1.23 },
         'year': '2015',
         'message': 'OK',
         'url': 'http://114.55.25.220:8080/chnsx/medical/statistics/helper',
@@ -168,7 +173,7 @@ export default {
     },
     getTestData () {
       let that = this
-      setTimeout(function (){
+      setTimeout(function () {
         that.overviewDataArr[0].chart.chartData = that.diseaseResponseData.data
         that.showBarChart(0)
         that.overviewDataArr[1].chart.chartData = that.bodyExamResponseData.data
@@ -212,6 +217,10 @@ export default {
     showBarChart (index) {
       let str = this.overviewDataArr[index].type
       this.$refs[str][0].getData(this.overviewDataArr[index].chart, 'health', this.year)
+    },
+    showPieChart (index) {
+      let str = this.overviewDataArr[index].type
+      this.$refs[str][1].getData()
     }
   }
 }
@@ -265,5 +274,4 @@ export default {
   background-color: rgb(64, 158, 255);
   margin-top: 30px;
 }
-
 </style>

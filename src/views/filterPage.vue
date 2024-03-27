@@ -449,8 +449,9 @@ export default {
     },
     propertyChange(fItem, sItem, index) {
       // if (sItem.curr === '请选择') return
-      if (this.propertyFilterInfoObj[fItem.title] === undefined)
+      if (this.propertyFilterInfoObj[fItem.title] === undefined) {
         this.propertyFilterInfoObj[fItem.title] = {}
+      }
       this.propertyFilterInfoObj[fItem.title][index] = sItem.curr
       console.log(this.propertyFilterInfoObj)
     },
