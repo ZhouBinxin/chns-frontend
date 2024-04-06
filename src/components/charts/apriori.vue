@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table v-if="data.length > 0" :data="data" style="width: 100%">
+    <el-table v-if="results.length > 0" :data="results" style="width: 100%">
       <el-table-column prop="itemset" label="频繁项集">
         <template slot-scope="scope">
           <div v-if="Array.isArray(scope.row.itemset)" class="itemset-list">
@@ -24,12 +24,15 @@
 
 <script>
 export default {
+  data () {
+
+  },
   props: {
     showAlert: {
       type: Boolean,
       required: true
     },
-    data: {
+    results: {
       type: Array,
       default: () => []
     }
