@@ -6,6 +6,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+
+    }
+  },
   props: {
     chartConfig: {
       type: Object,

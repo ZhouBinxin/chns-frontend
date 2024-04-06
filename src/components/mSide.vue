@@ -45,7 +45,11 @@
 </template>
 <script>
 export default {
-  data () { },
+  data () {
+    return {
+
+    }
+  },
   methods: {
     changeMenu (str) {
       if (str === 'analysis') this.$router.push({ name: 'filterPage' })

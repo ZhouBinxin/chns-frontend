@@ -24,6 +24,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+
+    }
+  },
   props: {
     showAlert: {
       type: Boolean,
