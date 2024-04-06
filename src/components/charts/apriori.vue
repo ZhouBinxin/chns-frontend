@@ -24,9 +24,6 @@
 
 <script>
 export default {
-  data () {
-
-  },
   props: {
     showAlert: {
       type: Boolean,
