@@ -10,7 +10,7 @@
                   <i class="el-icon-office-building"></i>&nbsp;选择算法
                 </div>
                 <el-select v-model="algorithm" clearable placeholder="请选择算法">
-                  <el-option v-for="item in algorithmLists" :key="item" :label="item" :value="item">
+                  <el-option v-for="item in algorithmLists" :key="item.key" :label="item.key" :value="item.key" :disabled="item.disabled">
                   </el-option>
                 </el-select>
                 <el-select v-model="healthtype" clearable placeholder="请选择类别">
@@ -39,13 +39,24 @@
         </el-container>
       </div>
       <div v-if="showAlert === false">
-        <linechart v-if="algorithm === 'apriori'" :chartConfig="chartConfig" />
+        <div style="display: flex; justify-content: center;">
+          <el-radio-group class="" v-model="radio" size="medium">
+            <el-radio-button label="表格" @click="changeRadio"></el-radio-button>
+            <el-radio-button label="折线图" @click="changeRadio"></el-radio-button>
+          </el-radio-group>
+        </div>
+        <div v-if="radio === '折线图'">
+          <linechart v-if="algorithm === 'apriori'" :chartConfig="chartConfig" />
+        </div>
+        <div v-if="radio === '表格'">
+          <apriori v-if="algorithm === 'apriori'" :results="results" />
+          <fpgrowth v-if="algorithm === 'FP-growth'" :results="results" />
+        </div>
       </div>
-      <div>
-        <apriori v-if="algorithm === 'apriori'" :results="results" :showAlert="showAlert" />
-        <fpgrowth v-if="algorithm === 'FP-growth'" :results="results" :showAlert="showAlert" />
+      <div v-if="showAlert === true">
+        <el-result v-if="showAlert" icon="warning" title="" subTitle="无满足数据">
+        </el-result>
       </div>
-
     </div>
   </div>
 </template>
@@ -64,16 +75,40 @@ export default {
     return {
       // 算法
       algorithm: 'apriori',
-      algorithmLists: ['apriori', 'LIG', 'FP-growth', 'k-means', 'k-medois', 'EM'],
+      algorithmLists: [{
+        key: 'apriori',
+        disabled: false
+      },
+      {
+        key: 'LIG',
+        disabled: true
+      },
+      {
+        key: 'FP-growth',
+        disabled: false
+      },
+      {
+        key: 'k-means',
+        disabled: true
+      },
+      {
+        key: 'k-medois',
+        disabled: true
+      },
+      {
+        key: 'EM',
+        disabled: true
+      }],
       results: [],
       supportThreshold: 0.1,
       confidenceThreshold: 0.1,
       healthtypes: ['医疗', '财产', '保险'],
       healthtype: '医疗',
-      showAlert: false,
+      showAlert: null,
       chartConfig: {
 
-      }
+      },
+      radio: '表格'
     }
   },
   methods: {
@@ -123,26 +158,6 @@ export default {
         { itemset: ['室内，可以冲水', '拥有自行车', '拥有汽车'], support: 0.05, confidence: 0.7 },
         { itemset: ['室外公共卫生间，可以冲水', '拥有汽车', '拥有自行车'], support: 0.03, confidence: 0.9 }
       ]
-
-      // let treeData = {
-      //   name: 'Root',
-      //   children: [
-      //     {
-      //       name: 'Node 1',
-      //       children: [
-      //         { name: 'Node 1-1' },
-      //         { name: 'Node 1-2' }
-      //       ]
-      //     },
-      //     {
-      //       name: 'Node 2',
-      //       children: [
-      //         { name: 'Node 2-1' },
-      //         { name: 'Node 2-2' }
-      //       ]
-      //     }
-      //   ]
-      // }
 
       if (this.healthtype === '医疗') {
         this.results = hlthData.filter(item => item.support >= this.supportThreshold && item.confidence >= this.confidenceThreshold)
@@ -231,12 +246,17 @@ export default {
 .medical-health {
   background-color: white;
   border-radius: 4px;
-  padding: 3%;
+  padding: 0;
+  margin: 0;
 }
 
 .divider {
   height: 1px;
   background-color: rgb(64, 158, 255);
   margin-top: 30px;
+}
+
+.el-radio-group {
+  margin-bottom: 30px;
 }
 </style>

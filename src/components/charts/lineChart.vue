@@ -6,6 +6,9 @@
 
 <script>
 export default {
+  mounted () {
+    this.initChart()
+  },
   data () {
     return {
 
@@ -17,14 +20,14 @@ export default {
       default: () => ({})
     }
   },
-  watch: {
-    chartConfig: {
-      handler () {
-        this.initChart()
-      },
-      deep: true
-    }
-  },
+  // watch: {
+  //   chartConfig: {
+  //     handler () {
+  //       this.initChart()
+  //     },
+  //     deep: true
+  //   }
+  // },
   methods: {
     initChart () {
       let chartDom = this.$refs.chart
