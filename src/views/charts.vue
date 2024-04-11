@@ -10,7 +10,8 @@
                   <i class="el-icon-office-building"></i>&nbsp;选择算法
                 </div>
                 <el-select v-model="algorithm" clearable placeholder="请选择算法">
-                  <el-option v-for="item in algorithmLists" :key="item.key" :label="item.key" :value="item.key" :disabled="item.disabled">
+                  <el-option v-for="item in algorithmLists" :key="item.key" :label="item.key" :value="item.key"
+                    :disabled="item.disabled">
                   </el-option>
                 </el-select>
                 <el-select v-model="healthtype" clearable placeholder="请选择类别">
@@ -39,23 +40,18 @@
         </el-container>
       </div>
       <div v-if="showAlert === false">
-        <div style="display: flex; justify-content: center;">
-          <el-radio-group class="" v-model="radio" size="medium">
-            <el-radio-button label="表格" @click="changeRadio"></el-radio-button>
-            <el-radio-button label="折线图" @click="changeRadio"></el-radio-button>
-          </el-radio-group>
-        </div>
-        <div v-if="radio === '折线图'">
-          <linechart v-if="algorithm === 'apriori'" :chartConfig="chartConfig" />
-        </div>
-        <div v-if="radio === '表格'">
-          <apriori v-if="algorithm === 'apriori'" :results="results" />
-          <fpgrowth v-if="algorithm === 'FP-growth'" :results="results" />
-        </div>
+        <el-tabs type="border-card" v-model="activeName" style="margin: 20px;">
+          <el-tab-pane label="折线图" name="first">
+            <linechart v-if="algorithm === 'apriori'" :chartConfig="chartConfig" />
+          </el-tab-pane>
+          <el-tab-pane label="表格" name="second">
+            <apriori v-if="algorithm === 'apriori'" :results="results" />
+            <fpgrowth v-if="algorithm === 'FP-growth'" :results="results" />
+          </el-tab-pane>
+        </el-tabs>
       </div>
       <div v-if="showAlert === true">
-        <el-result v-if="showAlert" icon="warning" title="" subTitle="无满足数据">
-        </el-result>
+        <el-empty description=""></el-empty>
       </div>
     </div>
   </div>
@@ -108,7 +104,8 @@ export default {
       chartConfig: {
 
       },
-      radio: '表格'
+      radio: '表格',
+      activeName: 'first'
     }
   },
   methods: {
