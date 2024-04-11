@@ -40,11 +40,11 @@ export default {
   data () {
     return {
       collapseBtnClass: 'el-icon-s-fold',
-      // 菜单默认不折叠
-      isCollapse: false,
-      collapseText: '收起',
-      // 默认宽度200
-      sideWidth: 200
+      // 菜单默认折叠
+      isCollapse: true,
+      collapseText: '展开',
+      // 默认宽度64
+      sideWidth: 64
     }
   },
   methods: {
