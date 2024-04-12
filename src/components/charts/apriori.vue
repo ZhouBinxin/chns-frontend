@@ -1,5 +1,10 @@
 <template>
   <div class="apriori">
+    <div class="tag-group">
+      <el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" size="mini">
+        {{ item.label }}
+      </el-tag>
+    </div>
     <el-table v-if="results.length > 0" :data="results" style="width: 100%">
       <el-table-column prop="itemset" label="频繁项集" :align="'center'">
         <template slot-scope="scope">
@@ -29,16 +34,16 @@ export default {
     results: {
       type: Array,
       default: () => []
+    },
+    items: {
+      type: Array,
+      default: () => []
     }
   }
 }
 </script>
 
 <style>
-.apriori {
-  margin: 0 50px 0 50px;
-}
-
 .itemset-list {
   display: flex;
   flex-wrap: wrap;
@@ -48,6 +53,10 @@ export default {
 .itemset-item {
   background-color: #f5f5f5;
   padding: 5px 10px;
+  margin: 5px;
+}
+
+.el-tag {
   margin: 5px;
 }
 </style>

@@ -42,10 +42,10 @@
       <div v-if="showAlert === false">
         <el-tabs type="border-card" v-model="activeName" style="margin: 20px;">
           <el-tab-pane label="折线图" name="first">
-            <linechart v-if="algorithm === 'apriori'" :chartConfig="chartConfig" />
+            <linechart v-if="algorithm === 'apriori'" :chartConfig="chartConfig" :items="items" />
           </el-tab-pane>
           <el-tab-pane label="表格" name="second">
-            <apriori v-if="algorithm === 'apriori'" :results="results" />
+            <apriori v-if="algorithm === 'apriori'" :results="results" :items="items" />
             <fpgrowth v-if="algorithm === 'FP-growth'" :results="results" />
           </el-tab-pane>
         </el-tabs>
@@ -105,7 +105,10 @@ export default {
 
       },
       radio: '表格',
-      activeName: 'first'
+      activeName: 'first',
+      items: [
+
+      ]
     }
   },
   methods: {
@@ -200,6 +203,13 @@ export default {
       } else {
         this.showAlert = false
       }
+
+      this.items = [
+        { type: 'info', label: this.algorithm },
+        { type: 'info', label: this.healthtype },
+        { type: 'info', label: '支持度阈值：' + this.supportThreshold },
+        { type: 'info', label: '置信度阈值：' + this.confidenceThreshold }
+      ]
     }
   }
 }
