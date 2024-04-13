@@ -40,13 +40,14 @@
         </el-container>
       </div>
       <div v-if="showAlert === false">
-        <el-tabs type="border-card" v-model="activeName" style="margin: 20px;">
-          <el-tab-pane label="折线图" name="first">
-            <linechart v-if="algorithm === 'apriori'" :chartConfig="chartConfig" :items="items" />
-          </el-tab-pane>
-          <el-tab-pane label="表格" name="second">
-            <apriori v-if="algorithm === 'apriori'" :results="results" :items="items" />
-            <fpgrowth v-if="algorithm === 'FP-growth'" :results="results" />
+        <el-tabs v-model="editableTabsValue" type="border-card" editable @edit="handleTabsEdit">
+          <el-tab-pane :key="item.name" v-for="item in editableTabs" :label="item.title" :name="item.name">
+            <div v-if="item.type === 'line'">
+              <linechart v-if="algorithm === 'apriori'" :chartConfig="chartConfig" :items="items" />
+            </div>
+            <div v-if="item.type === 'table'">
+              <apriori v-if="algorithm === 'apriori'" :results="results" :items="items" />
+            </div>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -105,10 +106,20 @@ export default {
 
       },
       radio: '表格',
-      activeName: 'first',
       items: [
 
-      ]
+      ],
+      editableTabsValue: '1',
+      editableTabs: [{
+        title: '折线图',
+        name: '1',
+        type: 'line'
+      }, {
+        title: '表格',
+        name: '2',
+        type: 'table'
+      }],
+      tabIndex: 2
     }
   },
   methods: {
@@ -167,6 +178,7 @@ export default {
         this.results = asset.filter(item => item.support >= this.supportThreshold && item.confidence >= this.confidenceThreshold)
       }
 
+      // 折线图配置
       this.chartConfig = {
         // title: {
         //   text: '动态折线图示例'
@@ -198,18 +210,49 @@ export default {
         ]
       }
 
+      // 判断是否有数据
       if (Object.keys(this.results).length === 0) {
         this.showAlert = true
       } else {
         this.showAlert = false
       }
 
+      // 标签
       this.items = [
         { type: 'info', label: this.algorithm },
         { type: 'info', label: this.healthtype },
         { type: 'info', label: '支持度阈值：' + this.supportThreshold },
         { type: 'info', label: '置信度阈值：' + this.confidenceThreshold }
       ]
+    },
+    // 删除图表
+    handleTabsEdit (targetName, action) {
+      if (action === 'add') {
+        let newTabName = ++this.tabIndex + ''
+        this.editableTabs.push({
+          title: 'New Tab',
+          name: newTabName,
+          content: 'New Tab content'
+        })
+        this.editableTabsValue = newTabName
+      }
+      if (action === 'remove') {
+        let tabs = this.editableTabs
+        let activeName = this.editableTabsValue
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1]
+              if (nextTab) {
+                activeName = nextTab.name
+              }
+            }
+          })
+        }
+
+        this.editableTabsValue = activeName
+        this.editableTabs = tabs.filter(tab => tab.name !== targetName)
+      }
     }
   }
 }
@@ -265,5 +308,9 @@ export default {
 
 .el-radio-group {
   margin-bottom: 30px;
+}
+
+.el-tabs{
+  margin: 20px;
 }
 </style>
