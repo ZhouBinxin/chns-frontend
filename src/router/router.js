@@ -8,6 +8,8 @@ import personalView from '../views/personalView.vue'
 import familyView from '../views/familyView.vue'
 import charts from '../views/charts.vue'
 import test from '../views/test.vue'
+import filterChartPage from '../views/filterChartPage.vue'
+import filterChartRes from '../views/filterChartRes.vue'
 
 Vue.use(VueRouter)
 /* eslint-disable */
@@ -19,7 +21,9 @@ const routes = [
   { path: '/familyView', name: 'familyView', component: familyView },
   { path: '/filterRes', name: 'filterRes', component: filterRes },
   { path: '/charts', name: 'charts', component: charts },
-  { path: '/test', name: 'test', component: test }
+  { path: '/test', name: 'test', component: test },
+  { path: '/filterChartPage', name: 'filterChartPage', component: filterChartPage},
+  { path: '/filterChartRes', name: 'filterChartRes', component: filterChartRes},
 ]
 
 const router = new VueRouter({

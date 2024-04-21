@@ -5,7 +5,7 @@
         <i :class="collapseBtnClass"></i>
         <span slot="title">{{collapseText}}</span>
       </el-menu-item>
-      <el-menu-item index="1" @click="changeMenu('analysis')">
+      <el-menu-item index="1" @click="changeMenu('filterPage')">
         <i class="el-icon-search"></i>
         <span slot="title">检索</span>
       </el-menu-item>
@@ -13,24 +13,10 @@
         <i class="el-icon-s-marketing"></i>
         <span slot="title">图表</span>
       </el-menu-item>
-      <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span slot="title">导航一</span>
-        </template>
-        <el-menu-item-group>
-          <span slot="title">分组一</span>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <span slot="title">选项4</span>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
-        </el-submenu>
-      </el-submenu>
+      <el-menu-item index="3" @click="changeMenu('filterChartPage')">
+        <i class="el-icon-s-marketing"></i>
+        <span slot="title">图表</span>
+      </el-menu-item>
     </el-menu>
   </el-aside>
 
@@ -49,8 +35,7 @@ export default {
   },
   methods: {
     changeMenu (str) {
-      if (str === 'analysis') this.$router.push({ name: 'filterPage' })
-      if (str === 'charts') this.$router.push({ name: 'charts' })
+      this.$router.push({ name: str })
     },
     // 点击收缩按钮触发
     collapse () {
