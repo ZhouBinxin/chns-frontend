@@ -103,7 +103,10 @@ export default {
 
       const chartData = await this.sendQueryToBackend(this.queryParams)
 
-      this.$router.push({ name: 'filterChartRes', query: { data: JSON.stringify(chartData) } })
+      // 保存数据到 sessionStorage
+      sessionStorage.setItem('chartData', JSON.stringify(chartData))
+
+      this.$router.push({ name: 'filterChartRes' })
       this.showLoading = false
     },
     // 选择某一项
@@ -127,7 +130,7 @@ export default {
       const baseUrl = 'http://localhost:8081//chnsx/chart/' + queryParams.algorithm
       try {
         const response = await axios.get(baseUrl, { params: queryParams })
-        return response.data
+        return response.data.data
       } catch (error) {
         console.error('发生错误:', error)
         throw error // 抛出错误以便外部处理

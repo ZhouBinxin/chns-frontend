@@ -5,7 +5,7 @@
         {{ item.label }}
       </el-tag>
     </div>
-    <el-table v-if="results.length > 0" :data="results" style="width: 100%">
+    <el-table :data="results" style="width: 100%">
       <el-table-column prop="itemset" label="频繁项集" :align="'center'">
         <template slot-scope="scope">
           <div v-if="Array.isArray(scope.row.itemset)" class="itemset-list">
@@ -18,6 +18,8 @@
       <el-table-column prop="support" label="支持度" sortable :sort-by="['support']" :align="'center'">
       </el-table-column>
       <el-table-column prop="confidence" label="置信度" sortable :sort-by="['confidence']" :align="'center'">
+      </el-table-column>
+      <el-table-column prop="lift" label="提升度" sortable :sort-by="['lift']" :align="'center'">
       </el-table-column>
     </el-table>
   </div>
