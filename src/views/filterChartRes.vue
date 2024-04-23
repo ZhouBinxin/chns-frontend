@@ -13,7 +13,7 @@ export default {
   mounted () {
     const chartData = this.$route.query.data
     if (chartData) {
-      this.chartData = JSON.parse(chartData)
+      this.chartData = chartData
     }
   },
   methods: {

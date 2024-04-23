@@ -7,7 +7,7 @@
       <div class="selectTitle">
         <i class="el-icon-office-building"></i>&nbsp;选择数据集
       </div>
-      <el-select v-model="queryParams.dataSet" clearable placeholder="请选择数据集">
+      <el-select v-model="queryParams.dataset" clearable placeholder="请选择数据集">
         <el-option v-for="(item, index) in dataSetList" :key="index" :label="item.label" :value="item.value">
         </el-option>
       </el-select>
@@ -57,9 +57,9 @@ export default {
       showLoading: false,
       submitButtonText: '开始检索',
       dataSetList: [
-        { label: '健康', value: 'health' },
-        { label: '保险', value: 'ins' },
-        { label: '资产', value: 'asset' }
+        { label: '健康', value: 'hlth_12' },
+        { label: '保险', value: 'ins_12' },
+        { label: '资产', value: 'asset_12' }
       ],
       algorithmList: [
         'apriori',
@@ -82,7 +82,7 @@ export default {
       parameters: ['支持度阈值', '置信度阈值'],
       parameter: [],
       queryParams: {
-        dataSet: 'health',
+        dataset: 'hlth_12',
         algorithm: 'apriori',
         support: 0.1,
         confidence: 0.1
@@ -97,18 +97,14 @@ export default {
   },
   methods: {
     // 去筛选结果页
-    toFilterChartRes () {
-      let that = this
+    async toFilterChartRes () {
       this.submitButtonText = '正在检索...'
       this.showLoading = true
 
-      const chartData = this.sendQueryToBackend(this.queryParams)
+      const chartData = await this.sendQueryToBackend(this.queryParams)
 
-      let timeId = setTimeout(() => {
-        that.$router.push({ name: 'filterChartRes', query: { data: JSON.stringify(chartData) } })
-        clearTimeout(timeId) // 移至跳转前清除定时器
-        this.showLoading = false // 使用箭头函数保持正确的 this 指向
-      }, 1000)
+      this.$router.push({ name: 'filterChartRes', query: { data: JSON.stringify(chartData) } })
+      this.showLoading = false
     },
     // 选择某一项
     showDetail (index) {
@@ -127,15 +123,15 @@ export default {
       this.queryParams.confidence = this.detailInfo[1].curr
     },
     // 根据用户输入的数据生成后端查询时需要的数据
-    sendQueryToBackend (queryParams) {
-      const baseUrl = 'http://xxxx/chnsx/medical/chart'
-      axios.get(baseUrl, { params: queryParams })
-        .then(response => {
-          return response.data
-        })
-        .catch(error => {
-          console.error('发生错误:', error)
-        })
+    async sendQueryToBackend (queryParams) {
+      const baseUrl = 'http://localhost:8081//chnsx/chart/' + queryParams.algorithm
+      try {
+        const response = await axios.get(baseUrl, { params: queryParams })
+        return response.data
+      } catch (error) {
+        console.error('发生错误:', error)
+        throw error // 抛出错误以便外部处理
+      }
     }
   }
 }
