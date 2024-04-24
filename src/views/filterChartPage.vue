@@ -14,7 +14,7 @@
       <div class="selectTitle">
         <i class="el-icon-office-building"></i>&nbsp;选择算法
       </div>
-      <el-select v-model="queryParams.algorithm" clearable placeholder="请选择算法">
+      <el-select v-model="algorithm" clearable placeholder="请选择算法">
         <el-option v-for="item in algorithmList" :key="item" :label="item" :value="item">
         </el-option>
       </el-select>
@@ -61,6 +61,7 @@ export default {
         { label: '保险', value: 'ins_12' },
         { label: '资产', value: 'asset_12' }
       ],
+      algorithm: 'apriori',
       algorithmList: [
         'apriori',
         'FP_growth',
@@ -83,7 +84,6 @@ export default {
       parameter: [],
       queryParams: {
         dataset: 'hlth_12',
-        algorithm: 'apriori',
         support: 0.1,
         confidence: 0.1
       }
@@ -102,9 +102,14 @@ export default {
       this.showLoading = true
 
       const chartData = await this.sendQueryToBackend(this.queryParams)
-
+      // 用户选择的内容
+      const userData = {
+        algorithm: this.algorithm,
+        queryParams: this.queryParams
+      }
       // 保存数据到 sessionStorage
       sessionStorage.setItem('chartData', JSON.stringify(chartData))
+      sessionStorage.setItem('userData', JSON.stringify(userData))
 
       this.$router.push({ name: 'filterChartRes' })
       this.showLoading = false
@@ -127,7 +132,7 @@ export default {
     },
     // 根据用户输入的数据生成后端查询时需要的数据
     async sendQueryToBackend (queryParams) {
-      const baseUrl = 'http://localhost:8081//chnsx/chart/' + queryParams.algorithm
+      const baseUrl = 'http://localhost:8081//chnsx/chart/' + this.algorithm
       try {
         const response = await axios.get(baseUrl, { params: queryParams })
         return response.data.data

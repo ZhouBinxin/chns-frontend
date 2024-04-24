@@ -1,10 +1,11 @@
 <template>
   <div class="apriori">
-    <div class="tag-group">
+    <div class="text-title">表格</div>
+    <!-- <div class="tag-group">
       <el-tag v-for="item in items" :key="item.label" :type="item.type" effect="plain" size="mini">
         {{ item.label }}
       </el-tag>
-    </div>
+    </div> -->
     <el-table :data="results" style="width: 100%">
       <el-table-column prop="itemset" label="频繁项集" :align="'center'">
         <template slot-scope="scope">
@@ -60,5 +61,12 @@ export default {
 
 .el-tag {
   margin: 5px;
+}
+
+.text-title {
+  margin-top: 60px;
+  font-size: larger;
+  color: rgb(64, 158, 255);
+  font-weight: bold;
 }
 </style>

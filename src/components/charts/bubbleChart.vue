@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="text-title">气泡图</div>
     <div class="bubble-chart" ref="bubbleChart"></div>
   </div>
 </template>
@@ -41,9 +42,9 @@ export default {
 
     // 配置项
     const option = {
-      title: {
-        text: '关联关系气泡图'
-      },
+      // title: {
+      //   text: '关联关系气泡图'
+      // },
       xAxis: {
         name: '支持度'
       },
@@ -93,5 +94,12 @@ export default {
 .bubble-chart {
   width: 100%;
   height: 400px;
+}
+
+.text-title {
+  margin-top: 60px;
+  font-size: larger;
+  color: rgb(64, 158, 255);
+  font-weight: bold;
 }
 </style>
