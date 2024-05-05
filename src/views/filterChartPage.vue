@@ -135,7 +135,7 @@ export default {
       const baseUrl = 'http://localhost:5000/chnsx/chart/' + this.algorithm
       try {
         const response = await axios.get(baseUrl, { params: queryParams })
-        return response.data.data
+        return response.data.data['frequent_sets']
       } catch (error) {
         console.error('发生错误:', error)
         throw error // 抛出错误以便外部处理
