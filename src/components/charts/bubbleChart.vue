@@ -69,7 +69,7 @@ export default {
         data: data.map(item => ({
           name: item.name,
           value: item.value,
-          symbolSize: item.value[2] * 100
+          symbolSize: item.value[2] * 25
         })),
         emphasis: {
           label: {
@@ -92,7 +92,7 @@ export default {
 
 <style scoped>
 .bubble-chart {
-  width: 100%;
+  width: 1000px;
   height: 400px;
 }
 

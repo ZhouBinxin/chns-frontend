@@ -2,8 +2,16 @@
   <div class="filter-chart-res">
     <div class="chart-container" v-if="dataLoaded">
       <div class="apriori-container" v-if="items[0].label === 'apriori'">
-        <bubble-chart :results="chartData" :items="items" />
-        <apriori :results="chartData" :items="items" />
+        <el-tabs type="border-card">
+          <el-tab-pane label="关联规则">
+            <bubble-chart :results="chartData['rules']" :items="items" />
+            <apriori :results="chartData['rules']" :items="items" />
+          </el-tab-pane>
+          <el-tab-pane label="频繁项集">
+            <bubble-chart :results="chartData['frequent_sets']" :items="items" />
+            <apriori :results="chartData['frequent_sets']" :items="items" />
+          </el-tab-pane>
+        </el-tabs>
       </div>
     </div>
   </div>
@@ -63,4 +71,9 @@ export default {
   border-top: 1px solid #ebebeb;
   border-bottom: 1px solid #ebebeb;
 }
+
+/* .bubble-chart{
+  width: 100%;
+  height: 400px;
+} */
 </style>
