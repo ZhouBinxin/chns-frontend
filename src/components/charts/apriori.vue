@@ -7,7 +7,7 @@
       </el-tag>
     </div> -->
     <el-table :data="results" style="width: 100%">
-      <el-table-column prop="itemset" label="频繁项集" :align="'center'">
+      <el-table-column prop="itemset" label="项目" :align="'center'">
         <template slot-scope="scope">
           <div v-if="Array.isArray(scope.row.itemset)" class="itemset-list">
             <div style="display: flex; justify-content: center;">

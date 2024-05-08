@@ -59,7 +59,7 @@ export default {
       dataSetList: [
         { label: '健康', value: 'hlth_12' },
         { label: '保险', value: 'ins_12' },
-        { label: '资产', value: 'asset_12' }
+        { label: '财产', value: 'asset_12' }
       ],
       algorithm: 'apriori',
       algorithmList: [
@@ -132,7 +132,7 @@ export default {
     },
     // 根据用户输入的数据生成后端查询时需要的数据
     async sendQueryToBackend (queryParams) {
-      const baseUrl = 'http://localhost:5000/chnsx/chart/' + this.algorithm
+      const baseUrl = 'https://chnsapi.xbxin.com/chnsx/chart/' + this.algorithm
       try {
         const response = await axios.get(baseUrl, { params: queryParams })
         return response.data.data

@@ -10,6 +10,7 @@ import charts from '../views/charts.vue'
 import test from '../views/test.vue'
 import filterChartPage from '../views/filterChartPage.vue'
 import filterChartRes from '../views/filterChartRes.vue'
+import rView from '../views/rView.vue'
 
 Vue.use(VueRouter)
 /* eslint-disable */
@@ -23,7 +24,8 @@ const routes = [
   { path: '/charts', name: 'charts', component: charts },
   { path: '/test', name: 'test', component: test },
   { path: '/filterChartPage', name: 'filterChartPage', component: filterChartPage},
-  { path: '/filterChartRes', name: 'filterChartRes', component: filterChartRes},
+  { path: '/filterChartRes', name: 'filterChartRes', component: filterChartRes },
+  { path: '/rView', name: 'rView', component: rView }
 ]
 
 const router = new VueRouter({
